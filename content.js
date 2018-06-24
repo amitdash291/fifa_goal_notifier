@@ -5,7 +5,10 @@ chrome.runtime.onMessage.addListener(
             // var firstHref = $("a[href^='http']").eq(0).attr("href");
             // console.log("The first external url in this page is: " + firstHref);
             console.log('Hello from Fifa Score Checker extension')
-            $.ajax('https://api.football-data.org/v1/fixtures/165090')
+            $.ajax({
+                url: 'https://api.football-data.org/v1/fixtures/165095',
+                beforeSend: function (xhr) { xhr.setRequestHeader('X-Auth-Token', 'a7c01923ed664f708837571c3c5fe8d4') }
+            })
                 .done(
                     function (data) {
                         console.log("Result of the match\n"
@@ -16,6 +19,8 @@ chrome.runtime.onMessage.addListener(
                     }
                 )
                 .fail(function () { console.log("Failed to fetch match details") });
+        } else if (request.message === "goal_notification") {
+            alert("Goal!!! Go check your streaming tab.\n" + request.score_description);
         }
     }
 );
