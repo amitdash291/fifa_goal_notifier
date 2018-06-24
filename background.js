@@ -39,13 +39,15 @@ window.setInterval(function () {
             function (data) {
                 var curHomeTeamGoal = data.fixture.result.goalsHomeTeam;
                 var curAwayTeamGoal = data.fixture.result.goalsAwayTeam;
-                var scoreDescription = "Default message";
+                var scoreDescription = " ";
                 if ((curHomeTeamGoal != lastHomeTeamGoal) || (curAwayTeamGoal != lastAwayTeamGoal)) {
                     scoreDescription = "Score of the match\n"
                         + data.fixture.homeTeamName
-                        + ": " + data.fixture.result.goalsHomeTeam
+                        + ": " + curHomeTeamGoal
                         + ", " + data.fixture.awayTeamName
-                        + ": " + data.fixture.result.goalsAwayTeam;
+                        + ": " + curAwayTeamGoal;
+                        lastHomeTeamGoal = curHomeTeamGoal;
+                        lastAwayTeamGoal = curAwayTeamGoal;
                     throwGoalNotification(scoreDescription);
                 }
             }
