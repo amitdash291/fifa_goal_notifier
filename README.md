@@ -1,2 +1,4 @@
 # Fifa Goal Notifier
-This is a simple Google Chrome extension for notifying one of the latest goals in the ongoing Fifa World Cup live matches.
+A browser extension that notifies when a goal is scored in the ongoing Fifa World Cup(2018). Is currently supported only by Google Chrome.
+
+API credits: https://api.football-data.org

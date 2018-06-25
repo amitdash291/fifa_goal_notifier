@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener(
             console.log('Hello from Fifa Score Checker extension')
             $.ajax({
                 url: 'https://api.football-data.org/v1/fixtures/165095',
-                beforeSend: function (xhr) { xhr.setRequestHeader('X-Auth-Token', 'a7c01923ed664f708837571c3c5fe8d4') }
+                headers: {'X-Auth-Token' : 'a7c01923ed664f708837571c3c5fe8d4'}
             })
                 .done(
                     function (data) {

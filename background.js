@@ -15,17 +15,20 @@ window.setInterval(function () {
 
     $.ajax({
         url: 'https://api.football-data.org/v1/fixtures',
-        beforeSend: function (xhr) { xhr.setRequestHeader('X-Auth-Token', 'a7c01923ed664f708837571c3c5fe8d4') }
+        headers: {'X-Auth-Token' : 'a7c01923ed664f708837571c3c5fe8d4'}
     })
         .done(function (data) {
-            var calculatedLink = $.grep(data.fixtures, function (fixture, i) {
+            var calculatedLink;
+            var firstMatchInPlay = $.grep(data.fixtures, function (fixture, i) {
                 return fixture.status === 'IN_PLAY';
-            })[0]._links.self.href;
+            })[0];
 
-            if (calculatedLink) {
+            if (firstMatchInPlay) {
+                calculatedLink = firstMatchInPlay._links.self.href;
                 console.log("Calculated fixture is: " + calculatedLink);
                 fixtureLink = calculatedLink;
             }
+            
         })
         .fail(function (err) {
             console.log(err);
@@ -33,19 +36,22 @@ window.setInterval(function () {
 
     $.ajax({
         url: fixtureLink,
-        beforeSend: function (xhr) { xhr.setRequestHeader('X-Auth-Token', 'a7c01923ed664f708837571c3c5fe8d4') }
+        headers: {'X-Auth-Token' : 'a7c01923ed664f708837571c3c5fe8d4'}
     })
         .done(
             function (data) {
                 var curHomeTeamGoal = data.fixture.result.goalsHomeTeam;
                 var curAwayTeamGoal = data.fixture.result.goalsAwayTeam;
-                var scoreDescription = "Default message";
+                var scoreDescription = " ";
+
                 if ((curHomeTeamGoal != lastHomeTeamGoal) || (curAwayTeamGoal != lastAwayTeamGoal)) {
                     scoreDescription = "Score of the match\n"
                         + data.fixture.homeTeamName
-                        + ": " + data.fixture.result.goalsHomeTeam
+                        + ": " + curHomeTeamGoal
                         + ", " + data.fixture.awayTeamName
-                        + ": " + data.fixture.result.goalsAwayTeam;
+                        + ": " + curAwayTeamGoal;
+                        lastHomeTeamGoal = curHomeTeamGoal;
+                        lastAwayTeamGoal = curAwayTeamGoal;
                     throwGoalNotification(scoreDescription);
                 }
             }
