@@ -1,13 +1,19 @@
+window.onload = function () {
+    chrome.storage.local.set({ apiKey: 'a7c01923ed664f708837571c3c5fe8d4' });
+}
+
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         if (request.message === "clicked_browser_action") {
             // alert('Hello from Fifa Score Checker extension')
             // var firstHref = $("a[href^='http']").eq(0).attr("href");
             // console.log("The first external url in this page is: " + firstHref);
-            console.log('Hello from Fifa Score Checker extension')
+            var apiKey = '';
+            chrome.storage.local.get('apiKey', function (data) { apiKey = data.apiKey; })
+            console.log('Hello from Fifa Score Checker extension!')
             $.ajax({
                 url: 'https://api.football-data.org/v1/fixtures/165095',
-                headers: {'X-Auth-Token' : 'a7c01923ed664f708837571c3c5fe8d4'}
+                headers: { 'X-Auth-Token': apiKey }
             })
                 .done(
                     function (data) {

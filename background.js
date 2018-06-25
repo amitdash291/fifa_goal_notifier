@@ -1,5 +1,10 @@
 var lastHomeTeamGoal = -1;
 var lastAwayTeamGoal = -1;
+var apiKey = '';
+
+window.onLoad = function() {
+    chrome.storage.local.get('apiKey', function (data) { apiKey = data.apiKey; })
+}
 
 // Called when the user clicks on the browser action.
 chrome.browserAction.onClicked.addListener(function (tab) {
@@ -15,7 +20,7 @@ window.setInterval(function () {
 
     $.ajax({
         url: 'https://api.football-data.org/v1/fixtures',
-        headers: {'X-Auth-Token' : 'a7c01923ed664f708837571c3c5fe8d4'}
+        headers: {'X-Auth-Token' : apiKey}
     })
         .done(function (data) {
             var calculatedLink;
@@ -36,7 +41,7 @@ window.setInterval(function () {
 
     $.ajax({
         url: fixtureLink,
-        headers: {'X-Auth-Token' : 'a7c01923ed664f708837571c3c5fe8d4'}
+        headers: {'X-Auth-Token' : apiKey}
     })
         .done(
             function (data) {
