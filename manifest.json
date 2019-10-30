@@ -1,6 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Fifa Goal Notifier",
+  "description": "A browser extension that notifies when a goal is scored in Fifa World Cup(2018)",
   "version": "1.0",
   "content_scripts": [
     {
