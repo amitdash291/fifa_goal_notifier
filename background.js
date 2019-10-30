@@ -1,15 +1,6 @@
 var lastHomeTeamGoal = -1;
 var lastAwayTeamGoal = -1;
 
-// Called when the user clicks on the browser action.
-chrome.browserAction.onClicked.addListener(function (tab) {
-    // Send a message to the active tab
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        var activeTab = tabs[0];
-        chrome.tabs.sendMessage(activeTab.id, { "message": "clicked_browser_action" });
-    });
-});
-
 window.setInterval(function () {
     var fixtureLink = 'https://api.football-data.org/v1/fixtures/165095';
 
